@@ -1,6 +1,7 @@
+#/usr/bin/env emacs --script
 
 (message "Hello Emacs Newbie ! :-)")
-
+;; C-x C-e eval-last-sexp
 ;; Lisp List
 ;;Lisp Atom
 ;; ' tells no operation to be done on list
@@ -18,7 +19,6 @@
 ;; Evaluating Inner Lists
 (+ 2 (+ 3 3))
 
-;; C-x C-e eval-last-sexp
 ;; sexp symbolic expression
 
 ;; Variables
@@ -34,9 +34,9 @@ fill-column
 (concat "The " (number-to-string (+ 2 fill-column)) " red foxes")
 
 ;; 0
-(+)  
+(+)
 ;; 1
-(*)  
+(*)
 ;; 3
 (+ 3)
 ;; 3
@@ -133,7 +133,7 @@ then warn of a tiger."
 (type-of-animal 'fierce)
 (type-of-animal 'zebra)
 
-;; If-then-else 
+;; If-then-else
 (if (> 4 5)
     (message "4 falsely greater than 5!")
   (message "4 is not greater than 5!"))
@@ -240,21 +240,21 @@ animals
 
 ;;How list are made
 ;;
-;;  bouquet -> car  | cdr -> car    | cdr -> car       | cdr 
+;;  bouquet -> car  | cdr -> car    | cdr -> car       | cdr
 ;;             rose |        violet |        buttercup | nil
 ;;
 (setq bouquet '(rose violet buttercup))
-;;  bouquet -> car  | cdr -> car    | cdr -> car       | cdr 
+;;  bouquet -> car  | cdr -> car    | cdr -> car       | cdr
 ;;             rose |        violet |        buttercup | nil
 ;;
 (setq flowers (cdr bouquet))
 ;;                flowers ->
-;;  bouquet -> car  | cdr -> car    | cdr -> car       | cdr 
+;;  bouquet -> car  | cdr -> car    | cdr -> car       | cdr
 ;;             rose |        violet |        buttercup | nil
 ;;
 (setq bouquet (cons 'lily bouquet))
 ;;                flowers ->
-;;  bouquet -> car  | cdr ->   car  | cdr -> car    | cdr -> car       | cdr 
+;;  bouquet -> car  | cdr ->   car  | cdr -> car    | cdr -> car       | cdr
 ;;             lily |          rose |        violet |        buttercup | nil
 ;;
 (eq (cdr  (cdr bouquet)) flowers)
@@ -263,9 +263,85 @@ animals
 
 ;; Loops and recursion
 ;; while
+(setq empty-list ())
+(setq animals '(gazelle giraffe lion tiger))
+animals
+(while animals
+  (setq animals (cdr animals))
+animals
 
+(setq animals '(gazelle giraffe lion tiger))
+;; Print elements function
+(defun print-elements-of-list (list)
+  "Print elements of LIST"
+  (while list
+    (print (car list))
+    (setq list (cdr list))))
 
+(print-elements-of-list animals)
 
+;; a loop with and an incrementing counter
+(setq count 0)
+(while (<= count 10)
+  (print count)
+  (setq count (1+ count)))
 
+'(1 2 3)
+'(1 . 2)
+(setq x '(1 2 3))
+(atom x)
+(car '())
+(cdr '())
+(eval '())
+(sort '( 3 2 4 1) '<)
+(sort '( 3 2 4 1) '>)
 
+(assoc 3 '((1 2) (3 5)))
+(getf '(1 2 3 4) 3)
 
+(setq x '(1 2 3))
+(push 4 x)
+(pop x)
+x
+
+;;Vector
+[1 2 3]
+(elt [1 2 3 ] 2)
+(setq v [1 2 3])
+;;set vector element
+(setf (aref v 2) 4)						;
+v
+
+;; Convert OBJECT to another TYPE
+(coerce [1 2 3] 'list)
+(coerce '(1 2 3) 'vector)
+
+;; dictionaries
+(setq hash (make-hash-table :test 'equal))
+;; add entry to hash table
+(puthash "hello" 5 hash)
+(puthash "a" 1 hash)
+(puthash "b" 2 hash)
+(puthash "c" 3 hash)
+;; get entry (search)
+(gethash "hello" hash)
+;; remove entry
+(remhash "hello" hash)
+;; count entries
+(hash-table-count hash)
+;; Iterate over hash table
+(maphash
+ (lambda (k v)
+   (print k)
+   (print v))
+ hash)
+
+;; define structures
+(defstruct account id balance)
+( setq a (make-account :id 3 :balance 17.31))
+;; get attribute
+(account-id a)
+;; set attribute
+(setf (account-balance a) 0)
+;; account predicate
+(account-p a)
