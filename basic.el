@@ -345,3 +345,101 @@ v
 (setf (account-balance a) 0)
 ;; account predicate
 (account-p a)
+
+
+(defun triangle (number-of-rows)
+  "Add up the number of pebbles in a triangle.
+The first row has one pebble, the second row two pebbles,
+The argument is NUMBER-OF-ROWS."
+  (let ((total 0)
+		(row-number 1))
+	(while (<= row-number number-of-rows)
+	  (setq total (+ total row-number))
+	  (setq row-number (1+ row-number)))
+	total))
+
+(triangle 5)
+
+;; We write second simple version
+(defun triangle (number)
+"Get the NUMBER and return total number of pebbles."
+  (let ((total 0))
+	(while (> number 0)
+	  (setq total (+ total number))
+	  (setq number (1- number)))
+  total))
+
+(triangle 5)
+
+(setq animals '(gazelle giraffe lion tiger))
+(reverse animals)
+
+;;our own function to reverse list
+(defun reverse-a-list (list)
+"Return a reversed LIST"
+(let (value )
+(while list
+  (setq value (cons (car list) value))
+  (setq list (cdr list)))
+  value))
+
+(reverse-a-list '(a b c))
+
+(setq animals '(gazelle giraffe lion tiger))
+(defun reverse-a-list-with-dolist (list)
+  "Using dolist, reverse the order of LIST"
+  (let (value) 							;Empty list
+  (dolist (element list value)
+	(setq value (cons element value)))))
+
+(reverse-a-list-with-dolist animals)
+
+;; Recursion
+(setq animals '(gazelle giraffe lion tiger))
+(defun print-recursively (list)
+  (when list
+	(print (car list))
+	(print-recursively (cdr list))))
+
+(print-recursively animals)
+
+(defun triangle-recursively (number)
+  "Return the sum of the numbers 1 to NUMBER"
+(if (= number 1)
+	1
+  (+ number
+	 (triangle-recursively
+	  (1- number)))))
+
+(triangle-recursively 7)
+
+(defun triangle-using-cond (number)
+  "NUMBER"
+  (cond ((<= number 0) 0)
+		((= number 1) 1)
+		((> number 1)
+		 (+ number (triangle-using-cond (1- number))))))
+
+(triangle-using-cond 7)
+
+(defun square-each (list)
+  "square each number in LIST"
+  (if (not list)
+	  nil
+	(cons
+	 (* (car list) (car list))
+	 (square-each (cdr list)))))
+
+(square-each '(1 2 3))
+
+(defun three-letter-words (words)
+  "keep only three letter words form WORDS"
+  (cond
+   ((not words) nil)
+
+   ((eq 3 (length (symbol-name (car words))))
+	(cons (car words) (three-letter-words (cdr words))))
+
+   (t (three-letter-words (cdr words)))))
+
+(three-letter-words '(one two three four five six)) ;;=>(one two six)
